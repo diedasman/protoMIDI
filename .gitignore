@@ -1,0 +1,12 @@
+.zmk/
+build/
+firmware/.zmk/
+firmware/build/
+firmware/build-out/
+firmware/zephyr/
+firmware/modules/
+firmware/tools/
+firmware/zmk/
+*.uf2
+*.hex
+*.bin

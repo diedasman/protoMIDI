@@ -1,0 +1,62 @@
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,physical-layout = &physical_layout0;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        wakeup-source;
+
+        col-gpios
+            = <&gpio0 20 GPIO_ACTIVE_HIGH>
+            , <&gpio1 0 GPIO_ACTIVE_HIGH>
+            ;
+
+        row-gpios
+            = <&gpio0 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+
+    default_transform: keymap_transform {
+        compatible = "zmk,matrix-transform";
+        columns = <2>;
+        rows = <3>;
+        map = <
+        //  PB86-1   PB86-2
+            RC(0,0)  RC(0,1)
+        //  PB86-3   PB86-4
+            RC(1,0)  RC(1,1)
+        //  ENC_PUSH unused
+            RC(2,0)  RC(2,1)
+        >;
+    };
+
+    physical_layout0: physical_layout_0 {
+        compatible = "zmk,physical-layout";
+        display-name = "Default";
+        kscan = <&kscan0>;
+        transform = <&default_transform>;
+    };
+
+    encoder: encoder {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 24 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <20>;
+        status = "okay";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&encoder>;
+        triggers-per-rotation = <20>;
+    };
+};
+

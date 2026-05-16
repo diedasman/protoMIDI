@@ -1,0 +1,7 @@
+if SHIELD_PROTOMIDI
+
+config ZMK_KEYBOARD_NAME
+    default "protoMIDI"
+
+endif
+

@@ -12,6 +12,46 @@ The first firmware target is a conservative Rev A bring-up:
 - Encoder: one EC11-compatible quadrature encoder
 - Deferred: OLED, shared LED backlight, battery sensing, and VCC cutoff
 
+## Current Hardware Support
+
+This build is meant to prove the basic keyboard hardware path before adding the
+display and lighting.
+
+Supported now:
+
+- `nice_nano_v2` compatible nRF52840 board target
+- 3x2 GPIO switch matrix
+- Four PB86 momentary buttons
+- Encoder push switch as the fifth matrix key
+- One unused matrix position at row 2, column 1
+- `col2row` matrix diode direction
+- EC11-style rotary encoder on separate A/B GPIOs
+- USB HID keyboard
+- Bluetooth HID keyboard through the selected ZMK board target
+- UF2 firmware output for drag-and-drop flashing
+
+Default key behavior:
+
+| Control | Binding |
+| --- | --- |
+| PB86-1 | `F13` |
+| PB86-2 | `F14` |
+| PB86-3 | `F15` |
+| PB86-4 | `F16` |
+| Encoder push | `F17` |
+| Encoder clockwise | Volume up |
+| Encoder counter-clockwise | Volume down |
+
+Not supported yet:
+
+- OLED display
+- PB86 LED/backlight control
+- Per-button LED state
+- Custom SSD1309 display handling
+- Confirmed battery sensing for the exact nRF52840 clone board
+- GPIO VCC cutoff or external power switching
+- Final hardware pinout validation
+
 ## Quick Build
 
 Install Docker, then run this from the repository root:

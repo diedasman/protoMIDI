@@ -10,3 +10,8 @@ firmware/zmk/
 *.uf2
 *.hex
 *.bin
+/hardware/protoMIDI-KiCAD/protoMIDI-KiCAD-backups
+*.lck
+*.kicad_pro
+PLAN.md
+CAD/

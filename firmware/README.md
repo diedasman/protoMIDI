@@ -4,28 +4,31 @@ This directory is a nested ZMK user config inside the larger protoMIDI hardware
 repo. The preferred build path is local, so builders can compile firmware from
 the open-source files in this repository entirely on their own machine.
 
-The first firmware target is a conservative Rev A bring-up:
+The first firmware target is the Rev A full-feature starting point:
 
 - Board: `nice_nano_v2`
 - Shield: `protomidi`
-- Inputs: 3x2 key matrix with five populated positions
+- Inputs: 2x3 key matrix with five populated positions
 - Encoder: one EC11-compatible quadrature encoder
-- Deferred: OLED, shared LED backlight, battery sensing, and VCC cutoff
+- Display: 2.42 inch 128x64 SSD1309 OLED over I2C using Zephyr's SSD1306-compatible driver
 
 ## Current Hardware Support
 
-This build is meant to prove the basic keyboard hardware path before adding the
-display and lighting.
+This build is the first full protoMIDI firmware baseline: switches, encoder,
+OLED display, USB HID, and Bluetooth HID. Pin assignments match the final Rev A
+pinout in `hardware/pinout.md`.
 
 Supported now:
 
 - `nice_nano_v2` compatible nRF52840 board target
-- 3x2 GPIO switch matrix
+- 2x3 GPIO switch matrix
 - Four PB86 momentary buttons
 - Encoder push switch as the fifth matrix key
-- One unused matrix position at row 2, column 1
+- One unused matrix position at row 1, column 2
 - `col2row` matrix diode direction
 - EC11-style rotary encoder on separate A/B GPIOs
+- 128x64 SSD1309 OLED on I2C
+- Custom animated monochrome protoMIDI OLED graphic
 - USB HID keyboard
 - Bluetooth HID keyboard through the selected ZMK board target
 - UF2 firmware output for drag-and-drop flashing
@@ -34,23 +37,24 @@ Default key behavior:
 
 | Control | Binding |
 | --- | --- |
-| PB86-1 | `F13` |
-| PB86-2 | `F14` |
-| PB86-3 | `F15` |
-| PB86-4 | `F16` |
-| Encoder push | `F17` |
+| PB86-1 | Play/pause |
+| PB86-2 | none |
+| PB86-3 | Previous track |
+| PB86-4 | Next track |
+| Encoder push | Mute |
 | Encoder clockwise | Volume up |
 | Encoder counter-clockwise | Volume down |
 
 Not supported yet:
 
-- OLED display
 - PB86 LED/backlight control
 - Per-button LED state
-- Custom SSD1309 display handling
 - Confirmed battery sensing for the exact nRF52840 clone board
 - GPIO VCC cutoff or external power switching
 - Final hardware pinout validation
+
+The OLED pin choice is intentional for this build: the shield overrides the
+`nice_nano_v2` I2C defaults and places the SSD1309 module on `P1.06`/`P1.04`.
 
 ## Quick Build
 

@@ -11,45 +11,53 @@ enclosure styling, not a dedicated MIDI protocol layer.
 
 ## Current Status
 
-This repository is in Rev A bring-up. The physical component set has been chosen,
-but the final pinout may still change during hardware validation.
+This repository now contains the first full Rev A build baseline. The hardware
+design, pinout notes, KiCad project, STEP assembly, and ZMK firmware config are
+tracked in the repo. The current firmware is HID-only and targets a
+`nice_nano_v2` compatible nRF52840 board with the `protomidi` ZMK shield.
 
 Current firmware support:
 
 - `nice_nano_v2` compatible nRF52840 board target
 - `protomidi` ZMK shield
-- 3x2 GPIO switch matrix
+- 2x3 GPIO switch matrix with five populated positions
 - Four PB86 momentary buttons
 - Encoder push switch as the fifth matrix key
 - EC11-style rotary encoder
+- 128x64 SSD1309 OLED on I2C using Zephyr's SSD1306-compatible driver
+- Custom monochrome protoMIDI OLED status graphic
 - USB HID keyboard
 - Bluetooth HID keyboard through the selected ZMK board target
 - Local UF2 firmware build
 
-Deferred until the input path is proven:
+Still to validate or implement:
 
-- OLED display
 - PB86 LED/backlight control
+- Per-button LED state
 - Battery sensing validation
 - GPIO VCC cutoff / external power switching
-- Final pinout freeze
-- Case and PCB refinement
+- Bluetooth pairing, reconnect, sleep, wake, and battery runtime behavior on the
+  assembled device
+- Encoder steps and triggers-per-rotation tuning on the final hardware
+- Reset-switch access in the enclosure
+- Final enclosure refinements
 
 ## Hardware
 
-Selected Rev A parts:
+Rev A hardware:
 
-- nRF52840 Pro Micro style development board
+- nRF52840 Pro Micro style development board compatible with the `nice_nano_v2`
+  ZMK target
 - Four PB86-B1 momentary switches with single-color LEDs
 - One EC11 vertical rotary encoder with push switch
 - One 2.42 inch 128x64 SSD1309 I2C OLED display
 - One 3.7 V 1200 mAh protected LiPo battery with JST-PH connector
-- FR4 protoboard or simple custom PCB
+- Custom KiCad PCB files and exported STEP assembly
 - 3D printed case with panel-mount styling
 
 Useful docs:
 
-- [Implementation plan](./PLAN.md)
+- [Hardware files](./hardware)
 - [Working pinout](./hardware/pinout.md)
 - [Component resources](./resources)
 
@@ -57,6 +65,13 @@ Useful docs:
 
 Firmware lives under [firmware](./firmware) as a nested ZMK user config inside
 this larger hardware repository.
+
+The firmware scope is intentionally HID-only:
+
+- USB keyboard/HID output
+- Bluetooth keyboard/HID output
+- Media-key bindings for playback and volume
+- No USB MIDI, BLE MIDI, DAW protocol, sequencer, clock, or control-change layer
 
 Build locally from the repository root:
 
@@ -77,24 +92,47 @@ The default key behavior is:
 
 | Control | Binding |
 | --- | --- |
-| PB86-1 | `F13` |
-| PB86-2 | `F14` |
-| PB86-3 | `F15` |
-| PB86-4 | `F16` |
-| Encoder push | `F17` |
+| PB86-1 | Play/pause |
+| PB86-2 | none |
+| PB86-3 | Previous track |
+| PB86-4 | Next track |
+| Encoder push | Mute |
 | Encoder clockwise | Volume up |
 | Encoder counter-clockwise | Volume down |
 
 See [firmware/README.md](./firmware/README.md) for build dependencies and
 firmware details.
 
+## Flashing
+
+1. Install Docker.
+2. Run `./firmware/build-local.sh` from the repository root.
+3. Double-tap reset on the nRF52840 board to enter the UF2 bootloader.
+4. Copy `firmware/build-out/protomidi-nice_nano_v2.uf2` to the mounted
+   bootloader drive.
+5. Let the board reboot, then test the controls over USB HID.
+6. Pair the device over Bluetooth through the normal ZMK/nRF52840 host pairing
+   flow when wireless testing is needed.
+
+## Known Limitations
+
+- protoMIDI is not a MIDI device. It currently sends keyboard/media HID events.
+- PB86 LEDs are wired hardware elements, but firmware LED/backlight behavior is
+  not implemented yet.
+- Battery sensing and runtime still need validation on the exact nRF52840 board
+  and LiPo combination.
+- Bluetooth pairing, reconnect, sleep, and wake behavior still need full device
+  testing.
+- Encoder detent behavior may need more tuning after final hardware testing.
+- Reset access and enclosure details are still being refined.
+
 ## Repository Layout
 
 ```text
 firmware/   ZMK config, local build script, and generated UF2 output
-hardware/   Pinout and Rev A hardware notes
+hardware/   Pinout, KiCad files, STEP assembly, and Rev A hardware notes
 resources/  Source references, images, datasheets, and component notes
-PLAN.md     Full implementation plan and open questions
+ToDo.md     Current project task list
 ```
 
 ## Design Intent
@@ -103,4 +141,3 @@ protoMIDI should be reproducible from off-the-shelf parts and simple fabrication
 Equivalent parts are welcome when they preserve the same electrical interfaces:
 momentary SPST switches, single-color LEDs, quadrature encoder, 3.3 V I2C OLED,
 and a Pro Micro compatible nRF52840 board supported by ZMK.
-

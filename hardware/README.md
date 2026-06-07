@@ -9,6 +9,7 @@ a `nice_nano_v2` compatible board with a custom `protomidi` shield.
 
 - [Configuration](#configuration)
 - [BOM](#bom)
+- [Assembly Preview](#assembly-preview)
 - [Files](#files)
 - [Matrix](#matrix)
 - [Encoder](#encoder)
@@ -46,9 +47,13 @@ Electrical configuration:
 | 1 | EC11 vertical rotary encoder, 15 mm shaft | [resources/encoder](../resources/encoder/README.md) | Quadrature volume control with push switch as the fifth matrix key |
 | 1 | 2.42 inch SSD1309 128x64 I2C OLED | [resources/display](../resources/display/README.md) | Runs on 3.3 V I2C at address `0x3c` |
 | 1 | 3.7 V 1200 mAh protected LiPo battery | [resources/battery](../resources/battery/README.md) | JST-PH connector; battery sensing still needs final validation |
-| As needed | M2.5 6 mm standoff kit | [resources/mounting](../resources/mounting/README.md) | PCB and enclosure mounting hardware |
+| As needed | M2.5 8 mm standoffs | [resources/mounting](../resources/mounting/README.md) | PCB and enclosure mounting hardware |
 | 1 | Custom protoMIDI PCB | [KiCad project](./protoMIDI-KiCAD) | Rev A PCB files are tracked in this directory |
 | 1 | 3D printed enclosure | [STEP assembly](./protoMIDI-ASSEMBLY-Updated.step) | Final reset-switch access and enclosure refinements remain open |
+
+## Assembly Preview
+
+![Bare protoMIDI assembly preview](../resources/assembly-proto-bare.png)
 
 ## Files
 

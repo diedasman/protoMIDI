@@ -14,9 +14,10 @@ Add an externally accessible momentary switch between RESET and GND. Confirm sin
 ~~Test the encoder steps and triggers-per-rotation settings until each detent produces one reliable~~
 ~~volume action. Check wiring and contact bounce if firmware tuning is insufficient.~~
 
-## Test Bluetooth and battery operation
+~~Test Bluetooth and battery operation~~
 
-Verify pairing, reconnect behavior, sleep/wake, all controls over Bluetooth, battery-powered operation, charging, and basic runtime stability.
+~~Verify pairing, reconnect behavior, sleep/wake, all controls over Bluetooth, battery-powered~~
+~~operation, charging, and basic runtime stability.~~
 
 ## Complete enclosure design
 

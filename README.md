@@ -4,6 +4,16 @@ protoMIDI is a compact DIY macropad with the physical language of a small MIDI
 controller: four large illuminated push buttons, one rotary encoder with push
 action, and a small monochrome OLED status display.
 
+## Table of Contents
+
+- [Current Status](#current-status)
+- [Hardware](#hardware)
+- [Firmware](#firmware)
+- [Flashing](#flashing)
+- [Known Limitations](#known-limitations)
+- [Repository Layout](#repository-layout)
+- [Design Intent](#design-intent)
+
 Despite the controller-style hardware, the firmware target is ZMK keyboard
 firmware. The device presents as a keyboard/HID macropad, not as a MIDI device.
 DAW, transport, clip, track, or effects labels are default keymap choices and
@@ -32,13 +42,9 @@ Current firmware support:
 
 Still to validate or implement:
 
-- PB86 LED/backlight control
-- Per-button LED state
 - Battery sensing validation
-- GPIO VCC cutoff / external power switching
-- Bluetooth pairing, reconnect, sleep, wake, and battery runtime behavior on the
-  assembled device
-- Encoder steps and triggers-per-rotation tuning on the final hardware
+- Peripheral 3V3 cutoff switch for the OLED and PB86 LEDs during CAD
+  finalisation
 - Reset-switch access in the enclosure
 - Final enclosure refinements
 
@@ -57,8 +63,7 @@ Rev A hardware:
 
 Useful docs:
 
-- [Hardware files](./hardware)
-- [Working pinout](./hardware/pinout.md)
+- [Hardware configuration](./hardware/README.md)
 - [Component resources](./resources)
 
 ## Firmware
@@ -117,13 +122,12 @@ firmware details.
 ## Known Limitations
 
 - protoMIDI is not a MIDI device. It currently sends keyboard/media HID events.
-- PB86 LEDs are wired hardware elements, but firmware LED/backlight behavior is
-  not implemented yet.
-- Battery sensing and runtime still need validation on the exact nRF52840 board
-  and LiPo combination.
-- Bluetooth pairing, reconnect, sleep, and wake behavior still need full device
-  testing.
-- Encoder detent behavior may need more tuning after final hardware testing.
+- PB86 LEDs are hardwired to 3V3. There is no firmware LED/backlight or
+  per-button LED state control planned.
+- The only planned lighting/display power control is a future board switch that
+  cuts 3V3 to the peripherals: the OLED and PB86 LEDs.
+- Battery sensing still needs validation on the exact nRF52840 board and LiPo
+  combination.
 - Reset access and enclosure details are still being refined.
 
 ## Repository Layout

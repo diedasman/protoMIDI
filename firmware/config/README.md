@@ -1,8 +1,13 @@
 # ZMK Config
 
+## Table of Contents
+
+- [Current Assumptions](#current-assumptions)
+- [Files To Update When Pins Change](#files-to-update-when-pins-change)
+
 `boards/shields/protomidi` contains the protoMIDI shield definition.
 
-Current assumptions:
+## Current Assumptions
 
 - The controller is compatible enough with ZMK's `nice_nano_v2` board target
   for the first build.
@@ -11,11 +16,17 @@ Current assumptions:
 - Matrix diode direction is `col2row`.
 - OLED display support is enabled through Zephyr's SSD1306-compatible driver for
   the 128x64 SSD1309 module.
-- PB86 LED/backlight control is intentionally left out of this firmware pass.
+- PB86 LED/backlight and per-button LED state control are not planned because
+  the PB86 LEDs are hardwired to 3V3.
+- Any future peripheral power control will be through the hardware switch that
+  cuts 3V3 to the OLED and PB86 LEDs.
+
+## Files To Update When Pins Change
 
 When the physical pinout changes, update:
 
 - `boards/shields/protomidi/protomidi.overlay`
-- `hardware/pinout.md`
+- `hardware/README.md`
+- `firmware/README.md`
 - the board argument passed to `./firmware/build-local.sh`, if the board target
   changes

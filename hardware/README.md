@@ -1,7 +1,8 @@
 # protoMIDI Hardware
 
 This directory contains the Rev A hardware baseline for protoMIDI: the KiCad
-project, exported STEP assembly, wiring plan, and physical configuration notes.
+project, exported STEP assembly, wiring reference, and physical configuration
+notes.
 The hardware is built around a Pro Micro style nRF52840 controller running ZMK as
 a `nice_nano_v2` compatible board with a custom `protomidi` shield.
 
@@ -15,15 +16,15 @@ a `nice_nano_v2` compatible board with a custom `protomidi` shield.
 - [Encoder](#encoder)
 - [OLED Display](#oled-display)
 - [Power](#power)
-- [Validation Notes](#validation-notes)
 
 ## Configuration
 
-Rev A uses a small controller-style front panel with four illuminated PB86
-momentary buttons, one EC11 rotary encoder with push action, and a 2.42 inch
-128x64 monochrome OLED. The controls are wired as a 2x3 diode matrix plus a
-separate quadrature encoder pair. Firmware treats the device as a HID macropad,
-not as a MIDI controller.
+Rev A is a bare controller assembly with four illuminated PB86 momentary
+buttons, one EC11 rotary encoder with push action, a 2.42 inch 128x64
+monochrome OLED, an nRF52840 Pro Micro style controller board, and a LiPo
+battery. The controls are wired as a 2x3 diode matrix plus a separate
+quadrature encoder pair. Firmware treats the device as a HID macropad, not as a
+MIDI controller.
 
 Electrical configuration:
 
@@ -46,21 +47,21 @@ Electrical configuration:
 | 4 | PB86-B1 illuminated momentary switch | [resources/switches](../resources/switches/README.md) | Matrix keys; integrated LEDs are hardwired to 3V3 |
 | 1 | EC11 vertical rotary encoder, 15 mm shaft | [resources/encoder](../resources/encoder/README.md) | Quadrature volume control with push switch as the fifth matrix key |
 | 1 | 2.42 inch SSD1309 128x64 I2C OLED | [resources/display](../resources/display/README.md) | Runs on 3.3 V I2C at address `0x3c` |
-| 1 | 3.7 V 1200 mAh protected LiPo battery | [resources/battery](../resources/battery/README.md) | JST-PH connector; battery sensing still needs final validation |
-| As needed | M2.5 8 mm standoffs | [resources/mounting](../resources/mounting/README.md) | PCB and enclosure mounting hardware |
+| 1 | 3.7 V 1200 mAh protected LiPo battery | [resources/battery](../resources/battery/README.md) | JST-PH connector |
+| As needed | M2.5 8 mm ABS spacers | [resources/mounting](../resources/mounting/README.md) | Project-modeled bare assembly spacing hardware |
 | 1 | Custom protoMIDI PCB | [KiCad project](./protoMIDI-KiCAD) | Rev A PCB files are tracked in this directory |
-| 1 | 3D printed enclosure | [STEP assembly](./protoMIDI-ASSEMBLY-Updated.step) | Final reset-switch access and enclosure refinements remain open |
+| 1 | Bare mechanical assembly | [STEP assembly](./CAD/protoMIDI%20ASSEMBLY.step) | Exported CAD reference for the assembled controller |
 
 ## Assembly Preview
 
-![Bare protoMIDI assembly preview](../resources/assembly-proto-bare.png)
+![Bare protoMIDI assembly preview](../resources/assembly-proto-bare-sm.png)
 
 ## Files
 
 | Path | Purpose |
 | --- | --- |
 | `protoMIDI-KiCAD/` | KiCad schematic and PCB files |
-| `protoMIDI-ASSEMBLY-Updated.step` | Exported mechanical assembly |
+| `CAD/protoMIDI ASSEMBLY.step` | Exported bare mechanical assembly |
 | `README.md` | Hardware configuration, BOM, and pinout reference |
 
 ## Matrix
@@ -107,11 +108,7 @@ The shield overlay overrides the `nice_nano_v2` I2C defaults and uses
 
 The controller can be powered over USB-C for build and test work. The selected
 nRF52840 Pro Micro style board also exposes a 3.7 V lithium battery connector
-for the 1200 mAh LiPo. Battery-powered operation has been tested at a
-basic level, but battery sensing still needs final validation.
+for the 1200 mAh LiPo.
 
 The PB86 LEDs are tied directly to 3V3, so firmware cannot dim them, turn them
-off individually, or represent per-button state. The planned hardware-level
-power control is a board switch that cuts 3V3 to the peripherals: the OLED and
-PB86 LEDs. That switch is not in the repo yet and will be added during the CAD
-finalisation phase.
+off individually, or represent per-button state.

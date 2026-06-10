@@ -6,13 +6,13 @@ the open-source files in this repository entirely on their own machine.
 
 ## Table of Contents
 
-- [Current Hardware Support](#current-hardware-support)
+- [Hardware Support](#hardware-support)
 - [Pinout](#pinout)
 - [Quick Build](#quick-build)
 - [Dependencies](#dependencies)
 - [Manual Build Sketch](#manual-build-sketch)
 
-The first firmware target is the Rev A full-feature starting point:
+The firmware target is the Rev A bare controller:
 
 - Board: `nice_nano_v2`
 - Shield: `protomidi`
@@ -20,13 +20,13 @@ The first firmware target is the Rev A full-feature starting point:
 - Encoder: one EC11-compatible quadrature encoder
 - Display: 2.42 inch 128x64 SSD1309 OLED over I2C using Zephyr's SSD1306-compatible driver
 
-## Current Hardware Support
+## Hardware Support
 
-This build is the first full protoMIDI firmware baseline: switches, encoder,
-OLED display, USB HID, and Bluetooth HID. Pin assignments match the final Rev A
-pinout documented below and in `hardware/README.md`.
+This build is the protoMIDI firmware baseline: switches, encoder, OLED display,
+USB HID, and Bluetooth HID. Pin assignments match the Rev A pinout documented
+below and in `hardware/README.md`.
 
-Supported now:
+Supported:
 
 - `nice_nano_v2` compatible nRF52840 board target
 - 2x3 GPIO switch matrix
@@ -53,25 +53,20 @@ Default key behavior:
 | Encoder clockwise | Volume up |
 | Encoder counter-clockwise | Volume down |
 
-Not supported yet:
-
-- Confirmed battery sensing for the exact nRF52840 clone board
-- Firmware LED/backlight or per-button LED state control; the PB86 LEDs are
-  hardwired to 3V3
-- Peripheral 3V3 cutoff switch support, once the board switch is added during
-  CAD finalisation
+The PB86 LEDs are hardwired to 3V3. Firmware does not provide LED/backlight or
+per-button LED state control.
 
 The OLED pin choice is intentional for this build: the shield overrides the
 `nice_nano_v2` I2C defaults and places the SSD1309 module on `P1.06`/`P1.04`.
 
 ## Pinout
 
-This is the firmware pinout for the first full Rev A build.
+This is the firmware pinout for the Rev A bare controller.
 
 ZMK target:
 
-- Current board target: `nice_nano_v2`
-- Current shield: `protomidi`
+- Board target: `nice_nano_v2`
+- Shield: `protomidi`
 - Firmware path: `firmware/config/boards/shields/protomidi`
 
 Matrix diode direction: `col2row`
@@ -126,7 +121,7 @@ firmware/build-out/protomidi-nice_nano_v2.uf2
 Double-tap reset on the nRF52840 board to enter the UF2 bootloader, then copy
 that `.uf2` file to the mounted bootloader drive.
 
-You can also pass a different ZMK board and shield:
+The build script also accepts explicit board and shield arguments:
 
 ```sh
 ./firmware/build-local.sh nice_nano_v2 protomidi
@@ -141,7 +136,7 @@ while. Later runs reuse that workspace.
 Default path:
 
 - Docker
-- Internet access on the first build, and when updating ZMK dependencies
+- Internet access for dependency downloads
 
 The script uses the official `zmkfirmware/zmk-build-arm:stable` container image,
 so builders do not need to install Zephyr SDK, `west`, or Python packages on the
@@ -157,5 +152,5 @@ west build -s zmk/app -b nice_nano_v2 -- \
   -DZMK_CONFIG=/absolute/path/to/protoMIDI/firmware/config
 ```
 
-The selected board may change after hardware validation. If it does, update the
-build command and any board-specific overlay notes.
+The build command above matches the tracked `nice_nano_v2` and `protomidi`
+configuration.

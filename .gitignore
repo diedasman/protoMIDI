@@ -14,4 +14,11 @@ firmware/zmk/
 *.lck
 *.kicad_pro
 PLAN.md
-CAD/
+resources/**/.git/
+resources/**/*.pdf
+resources/**/*.zip
+resources/**/*.tar
+resources/**/*.tar.*
+resources/**/*.tgz
+resources/**/*.kicad_sym
+resources/protoMIDI.gif

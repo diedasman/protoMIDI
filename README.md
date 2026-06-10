@@ -4,29 +4,30 @@ protoMIDI is a compact DIY macropad with the physical language of a small MIDI
 controller: four large illuminated push buttons, one rotary encoder with push
 action, and a small monochrome OLED status display.
 
+![Assembly](/resources/assembly-proto-bare-sm.png)
+
 ## Table of Contents
 
-- [Current Status](#current-status)
+- [Status](#status)
 - [Hardware](#hardware)
 - [Firmware](#firmware)
 - [Flashing](#flashing)
-- [Known Limitations](#known-limitations)
 - [Repository Layout](#repository-layout)
 - [Design Intent](#design-intent)
 
 Despite the controller-style hardware, the firmware target is ZMK keyboard
 firmware. The device presents as a keyboard/HID macropad, not as a MIDI device.
-DAW, transport, clip, track, or effects labels are default keymap choices and
-enclosure styling, not a dedicated MIDI protocol layer.
+DAW, transport, clip, track, or effects labels are default keymap choices, not a
+dedicated MIDI protocol layer.
 
-## Current Status
+## Status
 
-This repository now contains the first full Rev A build baseline. The hardware
-design, pinout notes, KiCad project, STEP assembly, and ZMK firmware config are
-tracked in the repo. The current firmware is HID-only and targets a
+This repository contains the Rev A bare-controller design baseline. The hardware
+design, pinout notes, KiCad project, STEP assembly, assembly preview, and ZMK
+firmware config are tracked in the repo. The firmware is HID-only and targets a
 `nice_nano_v2` compatible nRF52840 board with the `protomidi` ZMK shield.
 
-Current firmware support:
+Firmware support:
 
 - `nice_nano_v2` compatible nRF52840 board target
 - `protomidi` ZMK shield
@@ -40,14 +41,6 @@ Current firmware support:
 - Bluetooth HID keyboard through the selected ZMK board target
 - Local UF2 firmware build
 
-Still to validate or implement:
-
-- Battery sensing validation
-- Peripheral 3V3 cutoff switch for the OLED and PB86 LEDs during CAD
-  finalisation
-- Reset-switch access in the enclosure
-- Final enclosure refinements
-
 ## Hardware
 
 Rev A hardware:
@@ -58,8 +51,8 @@ Rev A hardware:
 - One EC11 vertical rotary encoder with push switch
 - One 2.42 inch 128x64 SSD1309 I2C OLED display
 - One 3.7 V 1200 mAh protected LiPo battery with JST-PH connector
-- Custom KiCad PCB files and exported STEP assembly
-- 3D printed case with panel-mount styling
+- Custom KiCad PCB files
+- Bare assembly STEP export
 
 Useful docs:
 
@@ -119,24 +112,12 @@ firmware details.
 6. Pair the device over Bluetooth through the normal ZMK/nRF52840 host pairing
    flow when wireless testing is needed.
 
-## Known Limitations
-
-- protoMIDI is not a MIDI device. It currently sends keyboard/media HID events.
-- PB86 LEDs are hardwired to 3V3. There is no firmware LED/backlight or
-  per-button LED state control planned.
-- The only planned lighting/display power control is a future board switch that
-  cuts 3V3 to the peripherals: the OLED and PB86 LEDs.
-- Battery sensing still needs validation on the exact nRF52840 board and LiPo
-  combination.
-- Reset access and enclosure details are still being refined.
-
 ## Repository Layout
 
 ```text
 firmware/   ZMK config, local build script, and generated UF2 output
-hardware/   Pinout, KiCad files, STEP assembly, and Rev A hardware notes
+hardware/   Pinout, KiCad files, CAD assembly, and Rev A hardware notes
 resources/  Source references, images, datasheets, and component notes
-ToDo.md     Current project task list
 ```
 
 ## Design Intent
@@ -145,3 +126,6 @@ protoMIDI should be reproducible from off-the-shelf parts and simple fabrication
 Equivalent parts are welcome when they preserve the same electrical interfaces:
 momentary SPST switches, single-color LEDs, quadrature encoder, 3.3 V I2C OLED,
 and a Pro Micro compatible nRF52840 board supported by ZMK.
+
+The PB86 LEDs are hardwired to 3V3. Firmware does not dim them, turn them off
+individually, or represent per-button LED state.

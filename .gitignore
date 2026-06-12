@@ -21,4 +21,4 @@ resources/**/*.tar
 resources/**/*.tar.*
 resources/**/*.tgz
 resources/**/*.kicad_sym
-resources/protoMIDI.gif
+

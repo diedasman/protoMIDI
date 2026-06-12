@@ -4,7 +4,7 @@ protoMIDI is a compact DIY macropad with the physical language of a small MIDI
 controller: four large illuminated push buttons, one rotary encoder with push
 action, and a small monochrome OLED status display.
 
-![Assembly](/resources/assembly-proto-bare-sm.png)
+![Assembly](/resources/protoMIDI.gif)
 
 ## Table of Contents
 

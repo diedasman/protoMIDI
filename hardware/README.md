@@ -1,114 +1,79 @@
 # protoMIDI Hardware
 
-This directory contains the Rev A hardware baseline for protoMIDI: the KiCad
-project, exported STEP assembly, wiring reference, and physical configuration
-notes.
-The hardware is built around a Pro Micro style nRF52840 controller running ZMK as
-a `nice_nano_v2` compatible board with a custom `protomidi` shield.
+This directory is the repository-level hardware area for the v1.0 update. The
+project is moving from the Rev A display-equipped prototype to a custom PCB with
+more switches, more encoders, and no OLED display.
 
 ## Table of Contents
 
-- [Configuration](#configuration)
-- [BOM](#bom)
-- [Assembly Preview](#assembly-preview)
-- [Files](#files)
-- [Matrix](#matrix)
-- [Encoder](#encoder)
-- [OLED Display](#oled-display)
-- [Power](#power)
+- [Status](#status)
+- [Repository Boundary](#repository-boundary)
+- [v1.0 Hardware Direction](#v10-hardware-direction)
+- [DFM Handoff](#dfm-handoff)
+- [Prototype Reference](#prototype-reference)
+- [Component References](#component-references)
 
-## Configuration
+## Status
 
-Rev A is a bare controller assembly with four illuminated PB86 momentary
-buttons, one EC11 rotary encoder with push action, a 2.42 inch 128x64
-monochrome OLED, an nRF52840 Pro Micro style controller board, and a LiPo
-battery. The controls are wired as a 2x3 diode matrix plus a separate
-quadrature encoder pair. Firmware treats the device as a HID macropad, not as a
-MIDI controller.
+The active v1.0 PCB work is currently in a local KiCad workspace. The hardware
+docs are being scaffolded ahead of the final exported manufacturing package.
 
-Electrical configuration:
+The previous Rev A hardware notes, firmware config, CAD assembly, preview image,
+and demo GIF now live in [prototype](../prototype/README.md).
 
-- Controller: nRF52840 Pro Micro style board compatible with `nice_nano_v2`
-- Shield path: `firmware/config/boards/shields/protomidi`
-- Matrix: 2 rows x 3 columns, five populated positions
-- Matrix diode direction: `col2row`
-- Encoder: EC11-style A/B quadrature pins plus push switch in the matrix
-- Display: SSD1309 128x64 OLED on I2C using Zephyr's SSD1306-compatible driver
-- Power: USB-C from the controller board or 3.7 V LiPo through the board battery
-  connector
-- LEDs: PB86 single-color LEDs are hardwired to 3V3 and are not individually
-  firmware-controllable
+## Repository Boundary
 
-## BOM
+`hardware/protoMIDI-KiCAD/` is the local KiCad design-source folder for the v1.0
+PCB. It is not intended to be included in the git repository.
 
-| Qty | Item | Resource | Notes |
-| --- | --- | --- | --- |
-| 1 | nRF52840 Pro Micro style dev board | [resources/promicro](../resources/promicro/README.md) | `nice_nano_v2` compatible ZMK target with UF2 bootloader |
-| 4 | PB86-B1 illuminated momentary switch | [resources/switches](../resources/switches/README.md) | Matrix keys; integrated LEDs are hardwired to 3V3 |
-| 1 | EC11 vertical rotary encoder, 15 mm shaft | [resources/encoder](../resources/encoder/README.md) | Quadrature volume control with push switch as the fifth matrix key |
-| 1 | 2.42 inch SSD1309 128x64 I2C OLED | [resources/display](../resources/display/README.md) | Runs on 3.3 V I2C at address `0x3c` |
-| 1 | 3.7 V 1200 mAh protected LiPo battery | [resources/battery](../resources/battery/README.md) | JST-PH connector |
-| As needed | M2.5 8 mm ABS spacers | [resources/mounting](../resources/mounting/README.md) | Project-modeled bare assembly spacing hardware |
-| 1 | Custom protoMIDI PCB | [KiCad project](./protoMIDI-KiCAD) | Rev A PCB files are tracked in this directory |
-| 1 | Bare mechanical assembly | [STEP assembly](./CAD/protoMIDI%20ASSEMBLY.step) | Exported CAD reference for the assembled controller |
+Only exported DFM handoff files should be committed for the v1.0 hardware once
+they are ready. Put them in
+[protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md). This keeps the public
+repository focused on the files needed to review, quote, fabricate, and assemble
+the board.
 
-## Assembly Preview
+## v1.0 Hardware Direction
 
-![Bare protoMIDI assembly preview](../resources/assembly-proto-bare-sm.png)
+The planned v1.0 board changes the project shape:
 
-## Files
+- Custom PCB replaces the bare prototype wiring approach
+- OLED display is removed
+- Switch count increases from the Rev A prototype
+- Rotary encoder count increases from the Rev A prototype
+- nRF52840 Pro Micro style controller remains the current baseline
+- ZMK HID behavior remains the current firmware direction
+- LED outputs are expected to be active-high where wired as GPIO -> LED ->
+  resistor -> GND
 
-| Path | Purpose |
-| --- | --- |
-| `protoMIDI-KiCAD/` | KiCad schematic and PCB files |
-| `CAD/protoMIDI ASSEMBLY.step` | Exported bare mechanical assembly |
-| `README.md` | Hardware configuration, BOM, and pinout reference |
+The v1.0 firmware and docs should be updated after the PCB pinout is finalized.
 
-## Matrix
+## DFM Handoff
 
-Diode direction: `col2row`
+The tracked hardware files in
+[protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md) should be manufacturing
+outputs such as:
 
-| Matrix position | Function | GPIO label | ZMK devicetree pin |
-| --- | --- | --- | --- |
-| Row 0 | PB86-1/PB86-2 encoder push row | `115` | `&gpio1 15` |
-| Row 1 | PB86-3/PB86-4 row | `011` | `&gpio0 11` |
-| Col 0 | PB86-1/PB86-3 | `002` | `&gpio0 02` |
-| Col 1 | PB86-2/PB86-4/unused column | `111` | `&gpio1 11` |
-| Col 2 | Encoder push column | `029` | `&gpio0 29` |
+- Gerber files
+- Drill files
+- Board outline/mechanical exports
+- Pick-and-place or placement files, if assembly is used
+- BOM or fabrication notes
+- Any review screenshots or PDFs that are safe and useful to publish
 
-Logical matrix:
+Avoid committing KiCad backups, local project state, generated caches, vendor
+archives, or copied third-party assets.
 
-| | COL0 | COL1 | COL2 |
-| --- | --- | --- | --- |
-| ROW0 | PB86-1 | PB86-2 | ENC_PUSH |
-| ROW1 | PB86-3 | PB86-4 | unused |
+## Prototype Reference
 
-## Encoder
+The Rev A prototype remains available as a working reference:
 
-| Function | GPIO label | ZMK devicetree pin |
-| --- | --- | --- |
-| Encoder A | `024` | `&gpio0 24` |
-| Encoder B | `022` | `&gpio0 22` |
-| Encoder common | GND | GND |
+- [Prototype overview](../prototype/README.md)
+- [Prototype firmware](../prototype/firmware/README.md)
+- [Prototype STEP assembly](../prototype/CAD/protoMIDI%20ASSEMBLY.step)
+- [Prototype assembly preview](../prototype/assembly-proto-bare-sm.png)
 
-## OLED Display
+## Component References
 
-The full Rev A build enables the 2.42 inch 128x64 SSD1309 OLED using Zephyr's
-SSD1306-compatible I2C display driver.
-
-| Function | GPIO label | ZMK devicetree pin |
-| --- | --- | --- |
-| OLED SDA | `106` | `NRF_PSEL(TWIM_SDA, 1, 6)` |
-| OLED SCL | `104` | `NRF_PSEL(TWIM_SCL, 1, 4)` |
-
-The shield overlay overrides the `nice_nano_v2` I2C defaults and uses
-`P1.06`/`P1.04` for the OLED.
-
-## Power
-
-The controller can be powered over USB-C for build and test work. The selected
-nRF52840 Pro Micro style board also exposes a 3.7 V lithium battery connector
-for the 1200 mAh LiPo.
-
-The PB86 LEDs are tied directly to 3V3, so firmware cannot dim them, turn them
-off individually, or represent per-button state.
+Useful component notes remain in [resources](../resources/README.md). Some of
+those references describe prototype parts, including the OLED display, and may
+not all carry forward to v1.0.

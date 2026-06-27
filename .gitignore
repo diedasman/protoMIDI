@@ -7,10 +7,18 @@ firmware/zephyr/
 firmware/modules/
 firmware/tools/
 firmware/zmk/
+prototype/firmware/.zmk/
+prototype/firmware/build/
+prototype/firmware/build-out/
+prototype/firmware/zephyr/
+prototype/firmware/modules/
+prototype/firmware/tools/
+prototype/firmware/zmk/
 *.uf2
 *.hex
 *.bin
 /hardware/protoMIDI-KiCAD/protoMIDI-KiCAD-backups
+/hardware/protoMIDI-KiCAD/
 *.lck
 *.kicad_pro
 PLAN.md
@@ -21,4 +29,3 @@ resources/**/*.tar
 resources/**/*.tar.*
 resources/**/*.tgz
 resources/**/*.kicad_sym
-

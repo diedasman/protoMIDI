@@ -1,0 +1,4 @@
+config PROTOMIDI_CUSTOM_STATUS_SCREEN
+    bool "protoMIDI custom OLED status screen"
+    default y if SHIELD_PROTOMIDI && ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    depends on SHIELD_PROTOMIDI

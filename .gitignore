@@ -18,7 +18,7 @@ prototype/firmware/zmk/
 *.hex
 *.bin
 /hardware/protoMIDI-KiCAD/protoMIDI-KiCAD-backups
-/hardware/protoMIDI-KiCAD/
+hardware/protoMIDI-KiCAD/
 *.lck
 *.kicad_pro
 PLAN.md

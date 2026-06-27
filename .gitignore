@@ -1,4 +1,5 @@
 .zmk/
+.vscode/
 build/
 firmware/.zmk/
 firmware/build/

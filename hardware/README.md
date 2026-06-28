@@ -1,79 +1,81 @@
 # protoMIDI Hardware
 
-This directory is the repository-level hardware area for the v1.0 update. The
-project is moving from the Rev A display-equipped prototype to a custom PCB with
-more switches, more encoders, and no OLED display.
+This directory documents the v1.0 hardware handoff. v1.0 replaces the Rev A
+display-equipped prototype with a custom PCB, a denser control surface, and a
+two-piece enclosure.
 
-## Table of Contents
+The tracked public handoff is
+[protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md).
 
-- [Status](#status)
-- [Repository Boundary](#repository-boundary)
-- [v1.0 Hardware Direction](#v10-hardware-direction)
-- [DFM Handoff](#dfm-handoff)
-- [Prototype Reference](#prototype-reference)
-- [Component References](#component-references)
+| Path | Purpose |
+| --- | --- |
+| [protoMIDI-DFM-PACK/PROTOMIDI-PCB-GERBERS.zip](./protoMIDI-DFM-PACK/PROTOMIDI-PCB-GERBERS.zip) | PCB Gerbers, PTH/NPTH drill files, and KiCad job file packaged for fabrication upload |
+| [protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL](./protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL/) | Enclosure top and bottom STEP/STL exports |
+| [protoMIDI-DFM-PACK/README.md](./protoMIDI-DFM-PACK/README.md) | Handoff notes and v1.0 BOM |
 
-## Status
+## v1.0 Scope
 
-The active v1.0 PCB work is currently in a local KiCad workspace. The hardware
-docs are being scaffolded ahead of the final exported manufacturing package.
+- Custom PCB with nRF52840 Pro Micro style controller footprint
+- 8x PB86-B1 illuminated push buttons
+- 2x EC11/PEC11R style rotary encoders
+- 2x encoder knobs, referenced in the local enclosure assembly CAD
+- 1x MTS-style toggle switch
+- 1x 6 mm utility push button
+- 1x LiPo battery connector
+- Two-piece enclosure: top and bottom
+- M2.5 mounting hardware with threaded inserts, referenced by the local CAD
 
-The previous Rev A hardware notes, firmware config, CAD assembly, preview image,
-and demo GIF now live in [prototype](../prototype/README.md).
+The OLED display is prototype-only and is not part of v1.0.
 
-## Repository Boundary
+## BOM
 
-`hardware/protoMIDI-KiCAD/` is the local KiCad design-source folder for the v1.0
-PCB. It is not intended to be included in the git repository.
+Mechanical items are added from the enclosure/CAD design. The DFM copy of this
+table lives in [protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md).
 
-Only exported DFM handoff files should be committed for the v1.0 hardware once
-they are ready. Put them in
-[protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md). This keeps the public
-repository focused on the files needed to review, quote, fabricate, and assemble
-the board.
+Note: the schematic currently uses placeholder value `R` for `R1-R9`. Finalize
+those resistor values before fabrication or assembly.
 
-## v1.0 Hardware Direction
+| Qty | References | Value / Part | Description |
+| ---: | --- | --- | --- |
+| 1 | BT1 | Battery_Cell | Single-cell LiPo battery, KiCad footprint `Battery_LiPo_802540_800mAh` |
+| 10 | D1-D10 | 1N4148 | Signal diodes for switch matrix |
+| 1 | D11 | LED | 5 mm power/status indicator LED |
+| 2 | E1,E2 | PEC11R-4215F-S0024 | EC11/PEC11R style vertical rotary encoders, 15 mm shaft |
+| 1 | J1 | JST PH 1x02 | 2-pin vertical battery connector, 2.00 mm pitch |
+| 9 | R1-R9 | R | Through-hole resistors; values pending |
+| 8 | SW1-SW8 | PB86-B1 | Illuminated momentary push buttons |
+| 1 | SW9 | SW_DPDT_x2 / MTS style | Vertical toggle switch |
+| 1 | SW10 | SW_Push | 6 x 6 mm utility push button |
+| 1 | U1 | nRF ProMicro | nRF52840 Pro Micro style controller module |
+| 2 | ENC knobs | ROTARY_ENCODER_KNOB | Encoder knobs; see local `hardware/CAD/protoMIDI Enclosure Assembly.step` for fit/details |
+| 1 | Enclosure top | protoMIDI ENCLOSURE TOP | Tracked STEP/STL export in `protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL` |
+| 1 | Enclosure bottom | protoMIDI ENCLOSURE BOTTOM | Tracked STEP/STL export in `protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL` |
+| 4 | Mounting screws | EDDT-M2.5-L6 | M2.5 L6 screw reference; local CAD file `hardware/CAD/EDDT-M2.5-L6.step` |
+| 4 | Threaded inserts | EMLZ-M2.5-L3 | M2.5 L3 threaded insert reference; local CAD file `hardware/CAD/EMLZ-M2.5-L3.step` |
 
-The planned v1.0 board changes the project shape:
+## Media
 
-- Custom PCB replaces the bare prototype wiring approach
-- OLED display is removed
-- Switch count increases from the Rev A prototype
-- Rotary encoder count increases from the Rev A prototype
-- nRF52840 Pro Micro style controller remains the current baseline
-- ZMK HID behavior remains the current firmware direction
-- LED outputs are expected to be active-high where wired as GPIO -> LED ->
-  resistor -> GND
+![protoMIDI PCB assembly](../assets/protoMIDIPCBAssy.png)
 
-The v1.0 firmware and docs should be updated after the PCB pinout is finalized.
+![protoMIDI bare PCB](../assets/PCB-bare.png)
 
-## DFM Handoff
+![protoMIDI front exploded enclosure view](../assets/exploded-front.png)
 
-The tracked hardware files in
-[protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md) should be manufacturing
-outputs such as:
-
-- Gerber files
-- Drill files
-- Board outline/mechanical exports
-- Pick-and-place or placement files, if assembly is used
-- BOM or fabrication notes
-- Any review screenshots or PDFs that are safe and useful to publish
-
-Avoid committing KiCad backups, local project state, generated caches, vendor
-archives, or copied third-party assets.
+![protoMIDI back exploded enclosure view](../assets/exploded-back.png)
 
 ## Prototype Reference
 
-The Rev A prototype remains available as a working reference:
+The Rev A prototype remains available for comparison:
 
 - [Prototype overview](../prototype/README.md)
 - [Prototype firmware](../prototype/firmware/README.md)
 - [Prototype STEP assembly](../prototype/CAD/protoMIDI%20ASSEMBLY.step)
-- [Prototype assembly preview](../prototype/assembly-proto-bare-sm.png)
+
+![Prototype assembly preview](../prototype/assembly-proto-bare-sm.png)
+
+![Prototype demo GIF](../prototype/protoMIDI.gif)
 
 ## Component References
 
-Useful component notes remain in [resources](../resources/README.md). Some of
-those references describe prototype parts, including the OLED display, and may
-not all carry forward to v1.0.
+Useful component notes remain in [resources](../resources/README.md). Some notes
+are historical prototype references; the display page is not part of v1.0.

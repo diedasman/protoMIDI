@@ -1,20 +1,22 @@
 # protoMIDI Prototype
 
-This folder contains the Rev A protoMIDI prototype files. The prototype is the
-earlier display-equipped build used to prove the physical controls, ZMK firmware,
-CAD assembly, and HID behavior before the v1.0 custom PCB update.
+This folder contains the Rev A protoMIDI prototype. It is the earlier
+display-equipped build used to prove the physical controls, ZMK firmware, CAD
+assembly, and HID behavior before the v1.0 custom PCB update.
 
-The prototype is kept as a reference implementation. It is not the final v1.0
-hardware direction.
+The prototype is historical reference. The active design is v1.0 in
+[../hardware](../hardware/README.md).
+
+![protoMIDI prototype demo](./protoMIDI.gif)
 
 ## Contents
 
 | Path | Purpose |
 | --- | --- |
-| `firmware/` | ZMK user config and local build script for the Rev A prototype |
-| `CAD/protoMIDI ASSEMBLY.step` | Exported STEP assembly for the bare prototype build |
-| `assembly-proto-bare-sm.png` | Assembly preview image |
-| `protoMIDI.gif` | Prototype demo media used by the main README |
+| [firmware](./firmware/README.md) | ZMK user config and local build script for the Rev A prototype |
+| [CAD/protoMIDI ASSEMBLY.step](./CAD/protoMIDI%20ASSEMBLY.step) | Exported STEP assembly for the bare prototype build |
+| [assembly-proto-bare-sm.png](./assembly-proto-bare-sm.png) | Prototype assembly preview image |
+| [protoMIDI.gif](./protoMIDI.gif) | Prototype demo media used by older docs |
 
 ## Prototype Hardware
 
@@ -30,7 +32,9 @@ The Rev A prototype uses:
 The PB86 LEDs are hardwired to 3V3 in the prototype. Firmware does not dim them,
 turn them off individually, or represent per-button LED state.
 
-## Using The Firmware
+![protoMIDI prototype assembly](./assembly-proto-bare-sm.png)
+
+## Firmware
 
 Build from the repository root:
 
@@ -38,7 +42,7 @@ Build from the repository root:
 ./prototype/firmware/build-local.sh
 ```
 
-The default firmware output is:
+The default firmware output is ignored and written to:
 
 ```text
 prototype/firmware/build-out/protomidi-nice_nano_v2.uf2
@@ -50,21 +54,8 @@ generated `.uf2` file to the mounted bootloader drive.
 See [prototype/firmware/README.md](./firmware/README.md) for firmware details,
 dependencies, pinout notes, and manual build commands.
 
-## Using The CAD And Media
-
-Use `CAD/protoMIDI ASSEMBLY.step` as a mechanical reference for the old prototype
-enclosure-free assembly. The image and GIF are project-owned media for showing
-the prototype layout and behavior in documentation.
-
-When updating docs from the repository root, link to these files with paths like:
-
-```md
-![protoMIDI prototype demo](./prototype/protoMIDI.gif)
-![Prototype assembly](./prototype/assembly-proto-bare-sm.png)
-```
-
 ## Relationship To v1.0
 
-v1.0 moves the project toward a custom PCB with no display, more switches, and
-more rotary encoders. Use this prototype folder for historical reference,
-behavior checks, and migration comparisons while the v1.0 DFM files are prepared.
+v1.0 removes the display, moves to a custom PCB, increases the switch count to
+eight, increases the encoder count to two, and adds the tracked enclosure DFM
+exports. Use this folder for old behavior checks and migration comparisons.

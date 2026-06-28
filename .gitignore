@@ -30,3 +30,4 @@ resources/**/*.tar
 resources/**/*.tar.*
 resources/**/*.tgz
 resources/**/*.kicad_sym
+hardware/CAD/

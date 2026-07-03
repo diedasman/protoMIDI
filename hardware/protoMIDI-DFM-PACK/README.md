@@ -27,8 +27,8 @@ The electronic BOM is based on the local KiCad CSV at
 `hardware/protoMIDI-KiCAD/protoMIDI-KiCAD.csv`, which is intentionally ignored.
 Mechanical items are added from the enclosure/CAD design.
 
-Note: the schematic currently uses placeholder value `R` for `R1-R9`. Finalize
-those resistor values before fabrication or assembly.
+Note: `R1-R8` are the illuminated switch LED current-limit resistors. `R9` is
+the power/status LED current-limit resistor for `D11`.
 
 | Qty | References | Value / Part | Description |
 | ---: | --- | --- | --- |
@@ -37,7 +37,8 @@ those resistor values before fabrication or assembly.
 | 1 | D11 | LED | 5 mm power/status indicator LED |
 | 2 | E1,E2 | PEC11R-4215F-S0024 | EC11/PEC11R style vertical rotary encoders, 15 mm shaft |
 | 1 | J1 | JST PH 1x02 | 2-pin vertical battery connector, 2.00 mm pitch |
-| 9 | R1-R9 | R | Through-hole resistors; values pending |
+| 8 | R1-R8 | 330 ohm | Through-hole resistors for illuminated switch LEDs |
+| 1 | R9 | 680 ohm to 1 kOhm | Through-hole resistor for power/status LED `D11` |
 | 8 | SW1-SW8 | PB86-B1 | Illuminated momentary push buttons |
 | 1 | SW9 | SW_DPDT_x2 / MTS style | Vertical toggle switch |
 | 1 | SW10 | SW_Push | 6 x 6 mm utility push button |

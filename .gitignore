@@ -1,6 +1,7 @@
 .zmk/
 .vscode/
 build/
+assets/
 firmware/.zmk/
 firmware/build/
 firmware/build-out/

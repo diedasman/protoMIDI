@@ -75,23 +75,25 @@ source notes live in [resources](./resources/README.md).
 
 ## Firmware
 
-The tracked firmware currently belongs to the Rev A prototype and lives in
-[prototype/firmware](./prototype/firmware/README.md). It targets a
-`nice_nano_v2` compatible nRF52840 board with the `protomidi` ZMK shield.
+The v1.0 custom PCB firmware lives in [firmware](./firmware/README.md). It
+targets a `nice_nano_v2` compatible nRF52840 board with the `protomidi` ZMK
+shield, includes the two encoders and all eight PB86 switches, and has no
+display support.
 
-Build the prototype firmware from the repository root:
+Build it from the repository root:
 
 ```sh
-./prototype/firmware/build-local.sh
+./firmware/build-local.sh
 ```
 
-The default output is ignored and written to:
+The ignored output is written to:
 
 ```text
-prototype/firmware/build-out/protomidi-nice_nano_v2.uf2
+firmware/build-out/protomidi-nice_nano_v2.uf2
 ```
 
-v1.0 firmware still needs to be mapped to the custom PCB pinout.
+The Rev A display-equipped firmware remains available in
+[prototype/firmware](./prototype/firmware/README.md).
 
 ## Repository Layout
 

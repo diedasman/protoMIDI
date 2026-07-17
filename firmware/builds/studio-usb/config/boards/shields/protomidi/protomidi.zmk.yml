@@ -1,0 +1,13 @@
+file_format: "1"
+id: protomidi
+name: protoMIDI
+type: shield
+url: https://github.com/diedasman/protoMIDI
+requires:
+  - pro_micro
+features:
+  - keys
+  - encoder
+  - studio
+siblings:
+  - protomidi

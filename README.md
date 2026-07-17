@@ -75,10 +75,11 @@ source notes live in [resources](./resources/README.md).
 
 ## Firmware
 
-The v1.0 custom PCB firmware lives in [firmware](./firmware/README.md). It
-targets a `nice_nano_v2` compatible nRF52840 board with the `protomidi` ZMK
-shield, includes the two encoders and all eight PB86 switches, and has no
-display support.
+The v1.0 custom PCB firmware lives in [firmware](./firmware/README.md). It has
+`standard` and `studio-usb` ZMK builds for the `nice_nano_v2` compatible
+nRF52840 board and `protomidi` shield. Both include the two encoders and all
+eight PB86 switches and have no display support. The second build adds runtime
+keymap editing through ZMK Studio over USB.
 
 Build it from the repository root:
 
@@ -86,10 +87,11 @@ Build it from the repository root:
 ./firmware/build-local.sh
 ```
 
-The ignored output is written to:
+The ignored outputs have short, purpose-based names:
 
 ```text
-firmware/build-out/protomidi-nice_nano_v2.uf2
+firmware/build-out/protomidi-standard.uf2
+firmware/build-out/protomidi-studio-usb.uf2
 ```
 
 The Rev A display-equipped firmware remains available in
@@ -99,6 +101,7 @@ The Rev A display-equipped firmware remains available in
 
 ```text
 assets/       Project-owned v1.0 renders and assembly images
+firmware/     Standard and USB Studio ZMK builds for the v1.0 PCB
 hardware/     v1.0 hardware notes and tracked DFM handoff files
 prototype/    Rev A prototype firmware, CAD export, preview image, and demo GIF
 resources/    Source references and component notes
@@ -109,5 +112,6 @@ Local-only ignored working areas:
 ```text
 hardware/protoMIDI-KiCAD/   Active KiCad design source and BOM CSV
 hardware/CAD/               Local CAD assembly and hardware reference exports
-prototype/firmware/build-out/ Firmware build output
+firmware/build-out/           v1.0 firmware build output
+prototype/firmware/build-out/ Prototype firmware build output
 ```

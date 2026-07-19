@@ -1,19 +1,29 @@
 # protoMIDI Hardware
 
-This directory documents the v1.0 hardware handoff. v1.0 replaces the Rev A
-display-equipped prototype with a custom PCB, a denser control surface, and a
-two-piece enclosure.
+This directory documents the protoMIDI custom PCB and two-piece enclosure. v1.1
+is the current release; the original v1.0 manufacturing handoff remains
+available for reproducibility.
 
-The tracked public handoff is
-[protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md).
+## Manufacturing Handoffs
 
-| Path | Purpose |
-| --- | --- |
-| [protoMIDI-DFM-PACK/PROTOMIDI-PCB-GERBERS.zip](./protoMIDI-DFM-PACK/PROTOMIDI-PCB-GERBERS.zip) | PCB Gerbers, PTH/NPTH drill files, and KiCad job file packaged for fabrication upload |
-| [protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL](./protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL/) | Enclosure top and bottom STEP/STL exports |
-| [protoMIDI-DFM-PACK/README.md](./protoMIDI-DFM-PACK/README.md) | Handoff notes and v1.0 BOM |
+| Version | Status | Contents |
+| --- | --- | --- |
+| [v1.1 DFM pack](./protoMIDI-DFM-PACK-v1.1/README.md) | Current | v1.1 PCB Gerbers/drills and revised enclosure STEP/STL exports |
+| [v1.0 DFM pack](./protoMIDI-DFM-PACK-v1.0/README.md) | Historical | Original PCB Gerbers/drills, enclosure STEP/STL exports, and top drawing DXF |
 
-## v1.0 Scope
+The packs are deliberately versioned rather than replacing the earlier
+manufacturing release.
+
+## v1.1 Changes
+
+- Refined PCB silkscreen and exported a new v1.1 Gerber set
+- Increased enclosure wall thickness
+- Increased clearance around the USB-C connector
+- Increased switch clearance
+- Added a slight angle to the bottom enclosure
+- Promoted the ZMK Studio USB firmware to the supported v1.1 build
+
+## Hardware Scope
 
 - Custom PCB with nRF52840 Pro Micro style controller footprint
 - 8x PB86-B1 illuminated push buttons
@@ -25,15 +35,15 @@ The tracked public handoff is
 - Two-piece enclosure: top and bottom
 - M2.5 mounting hardware with threaded inserts, referenced by the local CAD
 
-The OLED display is prototype-only and is not part of v1.0.
+The OLED display is prototype-only and is not part of v1.0 or v1.1.
 
 ## BOM
 
-Mechanical items are added from the enclosure/CAD design. The DFM copy of this
-table lives in [protoMIDI-DFM-PACK](./protoMIDI-DFM-PACK/README.md).
+The electronic BOM is common to v1.0 and v1.1. Mechanical items are added from
+the enclosure/CAD design. Copies of this table live in both DFM pack READMEs.
 
-Note: `R1-R8` are the illuminated switch LED current-limit resistors. `R9` is
-the power/status LED current-limit resistor for `D11`.
+`R1-R8` are the illuminated switch LED current-limit resistors. `R9` is the
+power/status LED current-limit resistor for `D11`.
 
 | Qty | References | Value / Part | Description |
 | ---: | --- | --- | --- |
@@ -48,21 +58,30 @@ the power/status LED current-limit resistor for `D11`.
 | 1 | SW9 | SW_DPDT_x2 / MTS style | Vertical toggle switch |
 | 1 | SW10 | SW_Push | 6 x 6 mm utility push button |
 | 1 | U1 | nRF ProMicro | nRF52840 Pro Micro style controller module |
-| 2 | ENC knobs | ROTARY_ENCODER_KNOB | Encoder knobs; see local `hardware/CAD/protoMIDI Enclosure Assembly.step` for fit/details |
-| 1 | Enclosure top | protoMIDI ENCLOSURE TOP | Tracked STEP/STL export in `protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL` |
-| 1 | Enclosure bottom | protoMIDI ENCLOSURE BOTTOM | Tracked STEP/STL export in `protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL` |
+| 2 | ENC knobs | ROTARY_ENCODER_KNOB | Encoder knobs; see the local versioned enclosure assembly in `hardware/CAD/` for fit/details |
+| 1 | Enclosure top | protoMIDI ENCLOSURE TOP | STEP/STL export in the selected versioned DFM pack |
+| 1 | Enclosure bottom | protoMIDI ENCLOSURE BOTTOM | STEP/STL export in the selected versioned DFM pack |
 | 4 | Mounting screws | EDDT-M2.5-L6 | M2.5 L6 screw reference; local CAD file `hardware/CAD/EDDT-M2.5-L6.step` |
 | 4 | Threaded inserts | EMLZ-M2.5-L3 | M2.5 L3 threaded insert reference; local CAD file `hardware/CAD/EMLZ-M2.5-L3.step` |
 
 ## Media
 
-![protoMIDI PCB assembly](../assets/protoMIDIPCBAssy.png)
+> **Asset version:** The following project images show v1.0. They have not yet
+> been regenerated for the v1.1 enclosure and silkscreen updates.
 
-![protoMIDI bare PCB](../assets/PCB-bare.png)
+![protoMIDI v1.0 PCB assembly](../assets/protoMIDIPCBAssy.png)
 
-![protoMIDI front exploded enclosure view](../assets/exploded-front.png)
+![protoMIDI v1.0 bare PCB](../assets/PCB-bare.png)
 
-![protoMIDI back exploded enclosure view](../assets/exploded-back.png)
+![protoMIDI v1.0 front exploded enclosure view](../assets/exploded-front.png)
+
+![protoMIDI v1.0 back exploded enclosure view](../assets/exploded-back.png)
+
+## Source Boundary
+
+The active KiCad source in `hardware/protoMIDI-KiCAD/` and CAD references in
+`hardware/CAD/` are local working files and intentionally ignored. The tracked
+public handoffs are the versioned DFM packs above.
 
 ## Prototype Reference
 
@@ -79,4 +98,5 @@ The Rev A prototype remains available for comparison:
 ## Component References
 
 Useful component notes remain in [resources](../resources/README.md). Some notes
-are historical prototype references; the display page is not part of v1.0.
+are historical prototype references; the display page is not part of v1.0 or
+v1.1.

@@ -2,9 +2,9 @@
 
 This folder contains the Rev A protoMIDI prototype. It is the earlier
 display-equipped build used to prove the physical controls, ZMK firmware, CAD
-assembly, and HID behavior before the v1.0 custom PCB update.
+assembly, and HID behavior before the v1.0 custom PCB release.
 
-The prototype is historical reference. The active design is v1.0 in
+The prototype is historical reference. The active design is v1.1 in
 [../hardware](../hardware/README.md).
 
 ![protoMIDI prototype demo](./protoMIDI.gif)
@@ -54,8 +54,10 @@ generated `.uf2` file to the mounted bootloader drive.
 See [prototype/firmware/README.md](./firmware/README.md) for firmware details,
 dependencies, pinout notes, and manual build commands.
 
-## Relationship To v1.0
+## Relationship To v1.1
 
-v1.0 removes the display, moves to a custom PCB, increases the switch count to
-eight, increases the encoder count to two, and adds the tracked enclosure DFM
-exports. Use this folder for old behavior checks and migration comparisons.
+The v1.0 release removed the display, moved to a custom PCB, increased the
+switch count to eight, increased the encoder count to two, and added tracked
+enclosure DFM exports. v1.1 refines that PCB silkscreen and enclosure and adds
+the supported ZMK Studio firmware build. Use this folder for old behavior checks
+and migration comparisons.

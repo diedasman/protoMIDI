@@ -1,11 +1,19 @@
 # protoMIDI
 
+## Sponsor
+
+**THIS PROJECT IS SPONSORED BY [PCBWAY](https://www.pcbway.com/)**
+
 protoMIDI is a compact DIY HID macropad with the control language of a small
-MIDI controller. The current v1.0 design is a custom PCB in a two-piece
+MIDI controller. The current v1.1 design uses a custom PCB in a two-piece
 enclosure with eight illuminated push buttons, two rotary encoders, a toggle,
 a small utility push button, and an nRF52840 Pro Micro style controller.
 
-![protoMIDI v1.0 assembly](./assets/protomidiassembly.png)
+> **Asset version:** The screenshots, renders, photographs, and GIFs in
+> [`assets/`](./assets/) currently show v1.0 hardware. Updated v1.1 assets will
+> be added later.
+
+![protoMIDI v1.0 assembly reference](./assets/protomidiassembly.png)
 
 Despite the controller-style hardware, protoMIDI currently targets ZMK keyboard
 firmware. It presents as a keyboard/HID macropad, not as a USB MIDI or BLE MIDI
@@ -14,21 +22,28 @@ not a dedicated MIDI protocol layer.
 
 ## Status
 
-v1.0 is the active design. The repository now includes the public manufacturing
-handoff in [hardware/protoMIDI-DFM-PACK](./hardware/protoMIDI-DFM-PACK/README.md):
+v1.1 is the active design. Both manufacturing handoffs remain available:
 
-- PCB Gerbers and drill files packaged as
-  [PROTOMIDI-PCB-GERBERS.zip](./hardware/protoMIDI-DFM-PACK/PROTOMIDI-PCB-GERBERS.zip)
-- Enclosure STEP and STL exports in
-  [ENCLOSURE-STEP-STL](./hardware/protoMIDI-DFM-PACK/ENCLOSURE-STEP-STL/)
-- A concise v1.0 BOM in the DFM pack README
+| Version | Status | DFM pack |
+| --- | --- | --- |
+| v1.1 | Current | [hardware/protoMIDI-DFM-PACK-v1.1](./hardware/protoMIDI-DFM-PACK-v1.1/README.md) |
+| v1.0 | Historical release | [hardware/protoMIDI-DFM-PACK-v1.0](./hardware/protoMIDI-DFM-PACK-v1.0/README.md) |
 
 The Rev A prototype remains in [prototype](./prototype/README.md) as historical
 reference for the earlier display-equipped build.
 
-## v1.0 Design
+## v1.1 Update
 
-The v1.0 scope is:
+v1.1 retains the v1.0 control layout and updates the manufacturing files:
+
+- PCB silkscreen refinements and newly exported v1.1 Gerbers
+- Increased enclosure wall thickness
+- Increased USB-C connector clearance
+- Increased switch clearance
+- A slight angle added to the bottom enclosure
+- A supported v1.1 ZMK firmware build with ZMK Studio over USB
+
+The design scope remains:
 
 - Custom PCB as the main electronics artifact
 - 8x PB86-B1 illuminated momentary switches
@@ -40,26 +55,25 @@ The v1.0 scope is:
 - Two-piece enclosure: top and bottom
 - M2.5 mounting hardware with threaded inserts, matched to the CAD references
 
-The local KiCad source folder,
-`hardware/protoMIDI-KiCAD/`, is intentionally ignored. The local CAD reference
-folder, `hardware/CAD/`, is also ignored. Those folders can be used while working
-on the project, but the tracked handoff is the DFM pack.
+The local KiCad source folder, `hardware/protoMIDI-KiCAD/`, and local CAD
+reference folder, `hardware/CAD/`, are intentionally ignored. The tracked
+manufacturing handoffs are the versioned DFM packs.
 
 ## Images
 
-The project-owned v1.0 images live in [assets](./assets/).
+All project-owned images below are v1.0 references.
 
-| Bare PCB  | PCB assembly |
-| ---       | --- |
-| ![protoMIDI bare PCB](./assets/PCB-bare.png) | ![protoMIDI PCB assembly](./assets/protoMIDIPCBAssy.png) |
+| Bare PCB | PCB assembly |
+| --- | --- |
+| ![protoMIDI v1.0 bare PCB](./assets/PCB-bare.png) | ![protoMIDI v1.0 PCB assembly](./assets/protoMIDIPCBAssy.png) |
 
-| Front Assembly  | Back assembly |
-| ---       | --- |
-| ![protoMIDI v1.0 assembly](./assets/protomidiassembly.png) | ![protoMIDI back assembly](./assets/assemblyback.png) |
+| Front assembly | Back assembly |
+| --- | --- |
+| ![protoMIDI v1.0 assembly](./assets/protomidiassembly.png) | ![protoMIDI v1.0 back assembly](./assets/assemblyback.png) |
 
 | Front exploded view | Back exploded view |
 | --- | --- |
-| ![protoMIDI front exploded view](./assets/exploded-front.png) | ![protoMIDI back exploded view](./assets/exploded-back.png) |
+| ![protoMIDI v1.0 front exploded view](./assets/exploded-front.png) | ![protoMIDI v1.0 back exploded view](./assets/exploded-back.png) |
 
 Prototype media lives in [prototype](./prototype/README.md):
 
@@ -69,17 +83,16 @@ Prototype media lives in [prototype](./prototype/README.md):
 
 ## Hardware
 
-Start with [hardware/README.md](./hardware/README.md) for the hardware boundary,
-tracked exports, ignored source folders, and links into the DFM pack. Component
-source notes live in [resources](./resources/README.md).
+Start with [hardware/README.md](./hardware/README.md) for version differences,
+tracked exports, ignored source folders, and DFM pack links. Component source
+notes live in [resources](./resources/README.md).
 
 ## Firmware
 
-The v1.0 custom PCB firmware lives in [firmware](./firmware/README.md). It has
-`standard` and `studio-usb` ZMK builds for the `nice_nano_v2` compatible
-nRF52840 board and `protomidi` shield. Both include the two encoders and all
-eight PB86 switches and have no display support. The second build adds runtime
-keymap editing through ZMK Studio over USB.
+The supported v1.1 firmware lives in [firmware](./firmware/README.md). It targets
+the `nice_nano_v2` compatible nRF52840 board and `protomidi` shield, includes
+both encoders and all eight PB86 switches, and supports live keymap editing in
+ZMK Studio over USB. The repository intentionally ships only this Studio build.
 
 Build it from the repository root:
 
@@ -87,11 +100,10 @@ Build it from the repository root:
 ./firmware/build-local.sh
 ```
 
-The ignored outputs have short, purpose-based names:
+The ignored output is:
 
 ```text
-firmware/build-out/protomidi-standard.uf2
-firmware/build-out/protomidi-studio-usb.uf2
+firmware/build-out/protomidi-v1.1-studio-usb.uf2
 ```
 
 The Rev A display-equipped firmware remains available in
@@ -100,9 +112,9 @@ The Rev A display-equipped firmware remains available in
 ## Repository Layout
 
 ```text
-assets/       Project-owned v1.0 renders and assembly images
-firmware/     Standard and USB Studio ZMK builds for the v1.0 PCB
-hardware/     v1.0 hardware notes and tracked DFM handoff files
+assets/       Project-owned v1.0 visual references (v1.1 update pending)
+firmware/     Supported v1.1 USB Studio ZMK build
+hardware/     Versioned v1.0 and v1.1 DFM handoffs and hardware notes
 prototype/    Rev A prototype firmware, CAD export, preview image, and demo GIF
 resources/    Source references and component notes
 ```
@@ -110,8 +122,9 @@ resources/    Source references and component notes
 Local-only ignored working areas:
 
 ```text
-hardware/protoMIDI-KiCAD/   Active KiCad design source and BOM CSV
-hardware/CAD/               Local CAD assembly and hardware reference exports
-firmware/build-out/           v1.0 firmware build output
+hardware/protoMIDI-KiCAD/     Active KiCad design source and BOM CSV
+hardware/CAD/                 Local CAD assemblies and reference exports
+firmware/builds/standard/     Optional local-only non-Studio configuration
+firmware/build-out/           Firmware build output
 prototype/firmware/build-out/ Prototype firmware build output
 ```

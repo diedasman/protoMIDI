@@ -4,6 +4,8 @@ build/
 assets/
 firmware/.zmk/
 firmware/build/
+firmware/build-standard-local.sh
+firmware/builds/standard/
 firmware/build-out/
 firmware/zephyr/
 firmware/modules/
